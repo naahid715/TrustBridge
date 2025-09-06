@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Audit Logs</h3>
+  {% if logs %}
+    {% for l in logs %}
+      <div class="card">
+        <div class="meta">{{ l["time"] }}</div>
+        <div><b>{{ l["action"] }}</b> — {{ l["who"] }}</div>
+        <div class="muted">{{ l["details"] }}</div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No activity yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

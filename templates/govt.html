@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Govt: Metadata View</h3>
+  <p class="muted">You can only see metadata (citizen & timestamp). Request full access → requires Judge approval.</p>
+  {% if records %}
+    {% for r in records %}
+      <div class="card">
+        <div><b>Record ID:</b> {{ r["id"] }}</div>
+        <div><b>Citizen:</b> {{ r["citizen"] }}</div>
+        <div class="meta"><b>Submitted:</b> {{ r["submitted_at"] }}</div>
+        <form method="post" action="{{ url_for('govt_request', record_id=r['id']) }}">
+          <input type="hidden" name="govt_name" value="AgentX" />
+          <button type="submit">Request Full Access</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No records available.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h3>Your Requests</h3>
+  {% if reqs %}
+    {% for q in reqs %}
+      <div class="card">
+        <div><b>Request ID:</b> {{ q["id"] }}</div>
+        <div><b>Record ID:</b> {{ q["record_id"] }}</div>
+        <div><b>Status:</b> {{ q["status"] }}</div>
+        <div class="meta"><b>Created:</b> {{ q["created_at"] }}</div>
+        {% if q["status"] == "judge_approved" %}
+          <a class="button" href="{{ url_for('govt_view', req_id=q['id']) }}">Complete Decryption & View</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No requests yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

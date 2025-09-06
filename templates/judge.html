@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Judge: Pending Requests</h3>
+  {% if pending %}
+    {% for p in pending %}
+      <div class="card">
+        <div><b>Request ID:</b> {{ p["id"] }}</div>
+        <div><b>Record ID:</b> {{ p["record_id"] }}</div>
+        <div class="meta"><b>Requested by:</b> {{ p["who"] }} | {{ p["created_at"] }}</div>
+        <form style="display:inline;" method="post" action="{{ url_for('judge_approve', req_id=p['id']) }}">
+          <button type="submit">Approve</button>
+        </form>
+        <form style="display:inline;" method="post" action="{{ url_for('judge_deny', req_id=p['id']) }}">
+          <button type="submit">Deny</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No pending requests.</p>
+  {% endif %}
+</div>
+{% endblock %}

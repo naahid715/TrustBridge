@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Citizen: Submit Private Data</h3>
+  <form method="post">
+    <label>Your Name</label>
+    <input type="text" name="citizen_name" placeholder="e.g., Sam Student"/>
+    <label style="margin-top:8px;">Private Message</label>
+    <textarea name="message" placeholder="Type something private..."></textarea>
+    <div class="right" style="margin-top:8px;">
+      <button type="submit">Encrypt & Save</button>
+    </div>
+  </form>
+  <p class="muted">Data is encrypted on the server with a random symmetric key split into two RSA-encrypted shares.</p>
+</div>
+
+<div class="card">
+  <h3>Your (All) Submissions (Metadata)</h3>
+  {% if records %}
+    {% for r in records %}
+      <div class="card">
+        <div><b>ID:</b> {{ r.id if r.id else r["id"] }}</div>
+        <div><b>Citizen:</b> {{ r.citizen if r.citizen else r["citizen"] }}</div>
+        <div class="meta"><b>Submitted:</b> {{ r.submitted_at if r.submitted_at else r["submitted_at"] }}</div>
+        <details style="margin-top:6px;">
+          <summary>Show encrypted payload</summary>
+          <div class="k"><code>ciphertext_b64:</code> {{ r.payload.ciphertext_b64 if r.payload.ciphertext_b64 else r["payload"]["ciphertext_b64"] }}</div>
+          <div class="k"><code>enc_share_judge_b64:</code> {{ r.payload.enc_share_judge_b64 if r.payload.enc_share_judge_b64 else r["payload"]["enc_share_judge_b64"] }}</div>
+          <div class="k"><code>enc_share_govt_b64:</code> {{ r.payload.enc_share_govt_b64 if r.payload.enc_share_govt_b64 else r["payload"]["enc_share_govt_b64"] }}</div>
+        </details>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No submissions yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

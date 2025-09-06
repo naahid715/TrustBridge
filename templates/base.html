@@ -1,0 +1,54 @@
+{% macro flash_messages() -%}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div>
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+{%- endmacro %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cyber Privacy Prototype</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 24px; }
+    header { display:flex; gap:12px; align-items:center; margin-bottom: 18px; }
+    a.button, button { padding:8px 12px; border:1px solid #ddd; border-radius:10px; text-decoration:none; background:#f7f7f7; cursor:pointer; }
+    .card { border:1px solid #e5e5e5; border-radius:16px; padding:16px; margin:12px 0; }
+    .muted { color:#666; font-size: 0.9em; }
+    .flash { padding:10px; border-radius:8px; margin:8px 0; }
+    .flash.success { background:#e6ffec; border:1px solid #a6f3b6; }
+    .flash.info { background:#e8f0ff; border:1px solid #a8c1ff; }
+    .flash.warning { background:#fff7e6; border:1px solid #ffd48a; }
+    .flash.danger { background:#ffecec; border:1px solid #ff9b9b; }
+    .nav { display:flex; gap:8px; margin-left: auto; }
+    .meta { font-size: 0.85em; color:#555; }
+    input[type=text], textarea { width: 100%; padding: 8px; border-radius: 10px; border:1px solid #ddd; }
+    textarea { min-height: 120px; }
+    .right { text-align:right; }
+    .k { background:#fafafa; border:1px dashed #ddd; padding:4px 8px; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>🔐 Cyber Privacy Prototype</h2>
+    <nav class="nav">
+      <a class="button" href="{{ url_for('home') }}">Home</a>
+      <a class="button" href="{{ url_for('citizen') }}">Citizen</a>
+      <a class="button" href="{{ url_for('govt') }}">Govt</a>
+      <a class="button" href="{{ url_for('judge') }}">Judge</a>
+      <a class="button" href="{{ url_for('logs') }}">Audit Logs</a>
+    </nav>
+  </header>
+
+  {{ flash_messages() }}
+
+  {% block content %}{% endblock %}
+</body>
+</html>

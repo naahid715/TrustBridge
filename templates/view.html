@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Decrypted Record</h3>
+  <p><b>Citizen:</b> {{ record["citizen"] }}</p>
+  <p class="meta"><b>Submitted:</b> {{ record["submitted_at"] }}</p>
+  <hr/>
+  <p><b>Message:</b></p>
+  <pre style="white-space:pre-wrap; background:#fafafa; padding:10px; border-radius:10px; border:1px solid #eee;">{{ message }}</pre>
+</div>
+{% endblock %}

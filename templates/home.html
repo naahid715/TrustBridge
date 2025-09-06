@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Welcome</h3>
+  <p>This prototype demonstrates a balance between <b>national security</b> and <b>individual privacy</b> using a <b>two-key cryptographic unlock</b> (Govt + Judge).</p>
+  <ul>
+    <li>Total citizen records: <b>{{ total_records }}</b></li>
+    <li>Requests pending judge: <b>{{ pending }}</b></li>
+    <li>Judge approved (awaiting govt): <b>{{ approved }}</b></li>
+    <li>Completed views: <b>{{ completed }}</b></li>
+  </ul>
+</div>
+<div class="card">
+  <h4>Demo Flow</h4>
+  <ol>
+    <li>Citizen uploads private data → encrypted immediately.</li>
+    <li>Govt requests access → waits for Judge approval.</li>
+    <li>Judge approval decrypts their share (but NOT the data).</li>
+    <li>Govt completes decryption using their share + judge share.</li>
+  </ol>
+</div>
+{% endblock %}
